@@ -94,7 +94,7 @@ mod any;
 mod cleartext;
 mod key;
 mod message;
-mod shared;
+pub mod shared;
 mod signature;
 mod signed_key;
 

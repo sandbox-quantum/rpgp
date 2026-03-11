@@ -231,7 +231,7 @@ pub trait Deserializable: Sized {
 /// - Skip `Error::Incomplete`
 /// - Skip `Error::EllipticCurve`
 /// - Pass through other errors.
-pub(crate) fn filter_parsed_packet_results(p: Result<Packet>) -> Option<Result<Packet>> {
+pub fn filter_parsed_packet_results(p: Result<Packet>) -> Option<Result<Packet>> {
     // FIXME: handle criticality of packets from 9580 (error, if unsupported)
 
     match p {
