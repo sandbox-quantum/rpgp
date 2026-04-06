@@ -155,8 +155,14 @@ pub trait Deserializable: Sized {
     }
 
     /// Ready binary packets from the given file.
+    ///
+    /// # Security
+    ///
+    /// The path is canonicalized before opening to normalize any `..` components.
+    /// Callers should validate paths from untrusted sources are within allowed directories.
     fn from_file_many<P: AsRef<Path>>(path: P) -> Result<Box<dyn Iterator<Item = Result<Self>>>> {
-        let file = std::fs::File::open(path)?;
+        let canonical_path = path.as_ref().canonicalize()?;
+        let file = std::fs::File::open(canonical_path)?;
         Self::from_bytes_many(BufReader::new(file))
     }
 
